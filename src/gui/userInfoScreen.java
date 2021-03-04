@@ -5,19 +5,26 @@
  */
 package gui;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import model.SerializationManager;
+import model.User;
+
 /**
  *
  * @author uzivatel
  */
 public class userInfoScreen extends javax.swing.JFrame {
 
+    ArrayList<User> users;
+    
     /**
      * Creates new form userInfoScreen
      */
     public userInfoScreen() {
         initComponents();
+        users = SerializationManager.loadUsers();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,9 +36,9 @@ public class userInfoScreen extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         nameTextField = new javax.swing.JTextField();
-        AddressTextField = new javax.swing.JTextField();
-        CityTextField = new javax.swing.JTextField();
-        PostcodeTextField = new javax.swing.JTextField();
+        addressTextField = new javax.swing.JTextField();
+        cityTextField = new javax.swing.JTextField();
+        postcodeTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -46,16 +53,16 @@ public class userInfoScreen extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nameTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, 340, 50));
+        jPanel1.add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, 50));
 
-        AddressTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(AddressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 340, 50));
+        addressTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jPanel1.add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 340, 50));
 
-        CityTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(CityTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 340, 50));
+        cityTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jPanel1.add(cityTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 340, 50));
 
-        PostcodeTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(PostcodeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, 340, 50));
+        postcodeTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jPanel1.add(postcodeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 340, 50));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -99,7 +106,21 @@ public class userInfoScreen extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-//        kekw
+        if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || postcodeTextField.getText().isEmpty() || cityTextField.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "You must enter all fields!");
+        }
+        else{
+            String name = nameTextField.getText();
+            String address = addressTextField.getText();
+            String city = cityTextField.getText();
+            String postcode = postcodeTextField.getText();
+            
+            User user = new User(name,address,city,postcode);
+            users.add(user);
+            SerializationManager.saveUsers(users);
+            this.dispose();
+        }
     }//GEN-LAST:event_SubmitActionPerformed
 
     /**
@@ -138,15 +159,15 @@ public class userInfoScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField AddressTextField;
-    private javax.swing.JTextField CityTextField;
-    private javax.swing.JTextField PostcodeTextField;
     private javax.swing.JButton Submit;
+    private javax.swing.JTextField addressTextField;
+    private javax.swing.JTextField cityTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nameTextField;
+    private javax.swing.JTextField postcodeTextField;
     // End of variables declaration//GEN-END:variables
 }

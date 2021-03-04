@@ -7,7 +7,10 @@ package gui;
 
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.table.JTableHeader;
+import model.SerializationManager;
+import model.User;
 
 /**
  *
@@ -15,13 +18,23 @@ import javax.swing.table.JTableHeader;
  */
 public class mainScreen extends javax.swing.JFrame {
 
+    ArrayList<User> users;
+    
     /**
      * Creates new form mainScreen
      */
     public mainScreen() {
         initComponents();
+        users = SerializationManager.loadUsers();
+        
+        String [] userArray = new String[users.size()];
+        for (int i = 0; i < users.size(); i++){
+            userArray[i] = users.get(i).getName();
+        }
+        
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(userArray));
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +53,9 @@ public class mainScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
-        UserButton1 = new javax.swing.JButton();
+        addNewButton = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -92,7 +107,7 @@ public class mainScreen extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 0));
         jLabel1.setText("This is user");
-        userPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, 270, 150));
+        userPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 490, 270, 150));
 
         userTable.setBackground(new java.awt.Color(0, 0, 0));
         userTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -115,16 +130,37 @@ public class mainScreen extends javax.swing.JFrame {
 
         userPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 830, 370));
 
-        UserButton1.setBackground(new java.awt.Color(255, 255, 255));
-        UserButton1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        UserButton1.setForeground(new java.awt.Color(0, 0, 0));
-        UserButton1.setText("Add New");
-        UserButton1.addActionListener(new java.awt.event.ActionListener() {
+        addNewButton.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        addNewButton.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButton.setText("Add New");
+        addNewButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserButton1ActionPerformed(evt);
+                addNewButtonActionPerformed(evt);
             }
         });
-        userPanel.add(UserButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 130, 60));
+        userPanel.add(addNewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+
+        jComboBox1.setEditable(true);
+        jComboBox1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        userPanel.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 220, 60));
+
+        refreshButton.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        refreshButton.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+        userPanel.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 130, 60));
 
         mainPanel.add(userPanel, "userPanel");
 
@@ -145,10 +181,26 @@ public class mainScreen extends javax.swing.JFrame {
         card.show(mainPanel, "userPanel"); 
     }//GEN-LAST:event_UserButtonActionPerformed
 
-    private void UserButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserButton1ActionPerformed
+    private void addNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonActionPerformed
         // TODO add your handling code here:
         new userInfoScreen().setVisible(true);
-    }//GEN-LAST:event_UserButton1ActionPerformed
+    }//GEN-LAST:event_addNewButtonActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        // TODO add your handling code here:
+        users = SerializationManager.loadUsers();
+        
+        String [] userArray = new String[users.size()];
+        for (int i = 0; i < users.size(); i++){
+            userArray[i] = users.get(i).getName();
+        }
+        
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(userArray));
+    }//GEN-LAST:event_refreshButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,12 +240,14 @@ public class mainScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ItemButton;
     private javax.swing.JButton UserButton;
-    private javax.swing.JButton UserButton1;
+    private javax.swing.JButton addNewButton;
     private javax.swing.JPanel itemPanel;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JPanel userPanel;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
