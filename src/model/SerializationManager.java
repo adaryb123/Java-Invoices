@@ -23,13 +23,13 @@ import javax.swing.JOptionPane;
  */
 public class SerializationManager {
     
-    public static ArrayList<User> loadUsers()
+    public static ArrayList<Customer> loadCustomers()
     {
-        ArrayList<User> users = new ArrayList();
+        ArrayList<Customer> customers = new ArrayList();
         
         try
         {
-            FileInputStream file = new FileInputStream("Users.dat");
+            FileInputStream file = new FileInputStream("Customers.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -37,7 +37,7 @@ public class SerializationManager {
             {
                 try
                 {
-                    users.add((User)inputFile.readObject());
+                    customers.add((Customer)inputFile.readObject());
                 }
                 catch (EOFException e){
                      eof = true;
@@ -51,16 +51,16 @@ public class SerializationManager {
         {
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
-        return users;
+        return customers;
     }
     
-    public static void saveUsers(ArrayList<User> users){
+    public static void saveCustomers(ArrayList<Customer> customers){
         try{
-            FileOutputStream file = new FileOutputStream("Users.dat");
+            FileOutputStream file = new FileOutputStream("Customers.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
-            for (int i = 0; i < users.size(); i++){
-                outputFile.writeObject(users.get(i));
+            for (int i = 0; i < customers.size(); i++){
+                outputFile.writeObject(customers.get(i));
             }
             outputFile.close();
             JOptionPane.showMessageDialog(null,"Succesfully saved!");

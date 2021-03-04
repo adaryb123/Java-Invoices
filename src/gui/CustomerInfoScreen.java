@@ -8,22 +8,22 @@ package gui;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.SerializationManager;
-import model.User;
+import model.Customer;
 
 /**
  *
  * @author uzivatel
  */
-public class userInfoScreen extends javax.swing.JFrame {
+public class CustomerInfoScreen extends javax.swing.JFrame {
 
-    ArrayList<User> users;
+    ArrayList<Customer> customers;
     
     /**
      * Creates new form userInfoScreen
      */
-    public userInfoScreen() {
+    public CustomerInfoScreen() {
         initComponents();
-        users = SerializationManager.loadUsers();
+        customers = SerializationManager.loadCustomers();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,9 +116,9 @@ public class userInfoScreen extends javax.swing.JFrame {
             String city = cityTextField.getText();
             String postcode = postcodeTextField.getText();
             
-            User user = new User(name,address,city,postcode);
-            users.add(user);
-            SerializationManager.saveUsers(users);
+            Customer customer = new Customer(name,address,city,postcode);
+            customers.add(customer);
+            SerializationManager.saveCustomers(customers);
             this.dispose();
         }
     }//GEN-LAST:event_SubmitActionPerformed
@@ -140,20 +140,21 @@ public class userInfoScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(userInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(userInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(userInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(userInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new userInfoScreen().setVisible(true);
+                new CustomerInfoScreen().setVisible(true);
             }
         });
     }

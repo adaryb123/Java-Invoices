@@ -11,14 +11,14 @@ import java.io.Serializable;
  *
  * @author uzivatel
  */
-public class User implements Serializable{
+public class Customer implements Serializable{
     
     private String name;
     private String address;
     private String city;
     private String postcode;
 
-    public User(String name, String address, String city, String postcode) {
+    public Customer(String name, String address, String city, String postcode) {
         this.name = name;
         this.address = address;
         this.city = city;
