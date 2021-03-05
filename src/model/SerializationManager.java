@@ -21,7 +21,10 @@ import javax.swing.JOptionPane;
  * This class is based on code from https://www.youtube.com/watch?v=GZ9MT2myBf8&t=2669s 
  * It loads and saves objects to their .dat files
  */
-public class SerializationManager {
+public final class SerializationManager {
+
+    private SerializationManager() {
+    }
     
     public static ArrayList<Customer> loadCustomers()
     {
@@ -63,14 +66,85 @@ public class SerializationManager {
                 outputFile.writeObject(customers.get(i));
             }
             outputFile.close();
-            JOptionPane.showMessageDialog(null,"Succesfully saved!");
             //this.dispose();
-        }
-        catch(IOException e){
-            JOptionPane.showMessageDialog(null,e.getMessage());
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
+    }
+    
+    public static void deleteCustomer(Customer customer){
+        ArrayList<Customer> customers = loadCustomers();
+        for (Customer i : customers){
+            if (i.getName().equals(customer.getName()) && i.getAddress().equals(customer.getAddress())
+                    && i.getCity().equals(customer.getCity()) && i.getPostcode().equals(customer.getPostcode()))
+            {
+                customers.remove(i);
+                break;
+            }
+        }
+        saveCustomers(customers);
+    }
+    
+    //________________________________________________________________________________________________________________
+    
+    public static ArrayList<Item> loadItems()
+    {
+        ArrayList<Item> items = new ArrayList();
+        
+        try
+        {
+            FileInputStream file = new FileInputStream("Items.dat");
+            ObjectInputStream inputFile = new ObjectInputStream(file);
+            
+            boolean eof = false;
+            while (!eof)
+            {
+                try
+                {
+                    items.add((Item)inputFile.readObject());
+                }
+                catch (EOFException e){
+                     eof = true;
+                }
+                catch(Exception e){
+                     JOptionPane.showMessageDialog(null,e.getMessage());
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        return items;
+    }
+    
+    public static void saveItems(ArrayList<Item> items){
+        try{
+            FileOutputStream file = new FileOutputStream("Items.dat");
+            ObjectOutputStream outputFile = new ObjectOutputStream(file);
+            
+            for (int i = 0; i < items.size(); i++){
+                outputFile.writeObject(items.get(i));
+            }
+            outputFile.close();
+            //this.dispose();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    }
+    
+    public static void deleteItem(Item item){
+        ArrayList<Item> items = loadItems();
+        for (Item i : items){
+            if (i.getName().equals(item.getName()) && i.getDescription().equals(item.getDescription())
+                    && (int)i.getPrice() == (int)item.getPrice())
+            {
+                items.remove(i);
+                break;
+            }
+        }
+        saveItems(items);
     }
 }

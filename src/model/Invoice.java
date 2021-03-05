@@ -5,13 +5,14 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author uzivatel
  */
-public class Invoice {
+public class Invoice implements Serializable {
     
     private Customer customer;
     private ArrayList<ItemAndCount> itemAndCount;

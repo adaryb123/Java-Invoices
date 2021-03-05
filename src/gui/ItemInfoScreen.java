@@ -7,24 +7,25 @@ package gui;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import model.Item;
 import model.SerializationManager;
-import model.Customer;
 
 /**
  *
  * @author uzivatel
  */
-public class CustomerInfoScreen extends javax.swing.JFrame {
+public class ItemInfoScreen extends javax.swing.JFrame {
 
-    ArrayList<Customer> customers;
+    ArrayList<Item> items;
     
     /**
-     * Creates new form userInfoScreen
+     * Creates new form ItemInfoScreen
      */
-    public CustomerInfoScreen() {
+    public ItemInfoScreen() {
         initComponents();
-        customers = SerializationManager.loadCustomers();
+        items = SerializationManager.loadItems();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,16 +37,15 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         nameTextField = new javax.swing.JTextField();
-        addressTextField = new javax.swing.JTextField();
-        cityTextField = new javax.swing.JTextField();
-        postcodeTextField = new javax.swing.JTextField();
+        priceTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         Submit = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descriptionTextArea = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -53,40 +53,33 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         nameTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        nameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameTextFieldActionPerformed(evt);
+            }
+        });
         jPanel1.add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, 50));
 
-        addressTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 340, 50));
-
-        cityTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(cityTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 340, 50));
-
-        postcodeTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(postcodeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 340, 50));
+        priceTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jPanel1.add(priceTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 340, 50));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Postcode");
+        jLabel1.setText("Price");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 110, 60));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Full name");
+        jLabel2.setText("Name");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 110, 60));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Address");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 110, 60));
-
-        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("City");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 110, 60));
+        jLabel3.setText("Description");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 140, 60));
 
         Submit.setBackground(new java.awt.Color(255, 255, 255));
         Submit.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -97,7 +90,14 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
                 SubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 590, 130, 60));
+        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 560, 130, 60));
+
+        descriptionTextArea.setColumns(20);
+        descriptionTextArea.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        descriptionTextArea.setRows(5);
+        jScrollPane1.setViewportView(descriptionTextArea);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 340, 230));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 700));
 
@@ -106,22 +106,26 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || postcodeTextField.getText().isEmpty() || cityTextField.getText().isEmpty())
+        if (nameTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty() || priceTextField.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "You must enter all fields!");
         }
         else{
             String name = nameTextField.getText();
-            String address = addressTextField.getText();
-            String city = cityTextField.getText();
-            String postcode = postcodeTextField.getText();
+            String description = descriptionTextArea.getText();
+            String priceAsString = priceTextField.getText();
+            double price = Double.parseDouble(priceAsString);
             
-            Customer customer = new Customer(name,address,city,postcode);
-            customers.add(customer);
-            SerializationManager.saveCustomers(customers);
+            Item item = new Item(name,description,price);
+            items.add(item);
+            SerializationManager.saveItems(items);
             this.dispose();
         }
     }//GEN-LAST:event_SubmitActionPerformed
+
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,43 +144,41 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ItemInfoScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerInfoScreen().setVisible(true);
+                new ItemInfoScreen().setVisible(true);
             }
         });
     }
     
-    public void initializeEditMode(String name, String address, String city, String postcode)
+        public void initializeEditMode(String name, String description, String price)
     {
         nameTextField.setText(name);
-        addressTextField.setText(address);
-        cityTextField.setText(city);
-        postcodeTextField.setText(postcode);
+        descriptionTextArea.setText(description);
+        priceTextField.setText(price);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Submit;
-    private javax.swing.JTextField addressTextField;
-    private javax.swing.JTextField cityTextField;
+    private javax.swing.JTextArea descriptionTextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameTextField;
-    private javax.swing.JTextField postcodeTextField;
+    private javax.swing.JTextField priceTextField;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,9 +8,12 @@ package gui;
 import java.awt.CardLayout;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import model.SerializationManager;
 import model.Customer;
+import model.Item;
 
 /**
  *
@@ -19,6 +22,7 @@ import model.Customer;
 public class MainScreen extends javax.swing.JFrame {
 
     ArrayList<Customer> customers;
+    ArrayList<Item> items;
     
     /**
      * Creates new form mainScreen
@@ -26,13 +30,10 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         customers = SerializationManager.loadCustomers();
+        items = SerializationManager.loadItems();
         
-        String [] customerArray = new String[customers.size()];
-        for (int i = 0; i < customers.size(); i++){
-            customerArray[i] = customers.get(i).getName();
-        }
-        
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(customerArray));
+        refreshCustomerTable();
+        refreshItemTable();
     }
     
     /**
@@ -48,13 +49,17 @@ public class MainScreen extends javax.swing.JFrame {
         customerButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         itemPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        userPanel = new javax.swing.JPanel();
+        editSelectedButtonItem = new javax.swing.JButton();
+        refreshButtonItem = new javax.swing.JButton();
+        addNewButtonItem = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        itemTable = new javax.swing.JTable();
+        customerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        userTable = new javax.swing.JTable();
-        addNewButton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        refreshButton = new javax.swing.JButton();
+        customerTable = new javax.swing.JTable();
+        addNewButtonCustomer = new javax.swing.JButton();
+        refreshButtonCustomer = new javax.swing.JButton();
+        editSelectedButtonCustomer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -90,21 +95,43 @@ public class MainScreen extends javax.swing.JFrame {
         itemPanel.setForeground(new java.awt.Color(0, 0, 0));
         itemPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setBackground(new java.awt.Color(102, 51, 255));
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(102, 255, 102));
-        jLabel2.setText("This is item");
-        itemPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 270, 150));
+        editSelectedButtonItem.setBackground(new java.awt.Color(255, 255, 255));
+        editSelectedButtonItem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        editSelectedButtonItem.setForeground(new java.awt.Color(0, 0, 0));
+        editSelectedButtonItem.setText("Edit Selected");
+        editSelectedButtonItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSelectedButtonItemActionPerformed(evt);
+            }
+        });
+        itemPanel.add(editSelectedButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
 
-        mainPanel.add(itemPanel, "itemPanel");
+        refreshButtonItem.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonItem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        refreshButtonItem.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonItem.setText("Refresh");
+        refreshButtonItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonItemActionPerformed(evt);
+            }
+        });
+        itemPanel.add(refreshButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 430, 130, 60));
 
-        userPanel.setBackground(new java.awt.Color(255, 255, 255));
-        userPanel.setForeground(new java.awt.Color(0, 0, 0));
-        userPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        addNewButtonItem.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonItem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        addNewButtonItem.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonItem.setText("Add New");
+        addNewButtonItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewButtonItemActionPerformed(evt);
+            }
+        });
+        itemPanel.add(addNewButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
 
-        userTable.setBackground(new java.awt.Color(0, 0, 0));
-        userTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        userTable.setModel(new javax.swing.table.DefaultTableModel(
+        itemTable.setBackground(new java.awt.Color(255, 255, 255));
+        itemTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        itemTable.setForeground(new java.awt.Color(0, 0, 0));
+        itemTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -115,47 +142,76 @@ public class MainScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        userTable.setRowHeight(35);
-        jScrollPane1.setViewportView(userTable);
-        JTableHeader tableHeader = userTable.getTableHeader();
+        itemTable.setRowHeight(35);
+        jScrollPane2.setViewportView(itemTable);
+        JTableHeader itemTableHeader = itemTable.getTableHeader();
+        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
+        itemTableHeader.setFont(headerFont);
+
+        itemPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 370));
+
+        mainPanel.add(itemPanel, "itemPanel");
+
+        customerPanel.setBackground(new java.awt.Color(255, 255, 255));
+        customerPanel.setForeground(new java.awt.Color(0, 0, 0));
+        customerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        customerTable.setBackground(new java.awt.Color(255, 255, 255));
+        customerTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        customerTable.setForeground(new java.awt.Color(0, 0, 0));
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        customerTable.setRowHeight(35);
+        jScrollPane1.setViewportView(customerTable);
+        JTableHeader tableHeader = customerTable.getTableHeader();
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
         tableHeader.setFont(headerFont);
 
-        userPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 830, 370));
+        customerPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 370));
 
-        addNewButton.setBackground(new java.awt.Color(255, 255, 255));
-        addNewButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        addNewButton.setForeground(new java.awt.Color(0, 0, 0));
-        addNewButton.setText("Add New");
-        addNewButton.addActionListener(new java.awt.event.ActionListener() {
+        addNewButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        addNewButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonCustomer.setText("Add New");
+        addNewButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewButtonActionPerformed(evt);
+                addNewButtonCustomerActionPerformed(evt);
             }
         });
-        userPanel.add(addNewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+        customerPanel.add(addNewButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
 
-        jComboBox1.setEditable(true);
-        jComboBox1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        refreshButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        refreshButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonCustomer.setText("Refresh");
+        refreshButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                refreshButtonCustomerActionPerformed(evt);
             }
         });
-        userPanel.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 220, 60));
+        customerPanel.add(refreshButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, 130, 60));
 
-        refreshButton.setBackground(new java.awt.Color(255, 255, 255));
-        refreshButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        refreshButton.setForeground(new java.awt.Color(0, 0, 0));
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+        editSelectedButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        editSelectedButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        editSelectedButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        editSelectedButtonCustomer.setText("Edit Selected");
+        editSelectedButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshButtonActionPerformed(evt);
+                editSelectedButtonCustomerActionPerformed(evt);
             }
         });
-        userPanel.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 130, 60));
+        customerPanel.add(editSelectedButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
 
-        mainPanel.add(userPanel, "userPanel");
+        mainPanel.add(customerPanel, "userPanel");
 
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 840, 630));
 
@@ -174,26 +230,55 @@ public class MainScreen extends javax.swing.JFrame {
         card.show(mainPanel, "userPanel"); 
     }//GEN-LAST:event_customerButtonActionPerformed
 
-    private void addNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonActionPerformed
+    private void addNewButtonCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonCustomerActionPerformed
         // TODO add your handling code here:
         new CustomerInfoScreen().setVisible(true);
-    }//GEN-LAST:event_addNewButtonActionPerformed
+    }//GEN-LAST:event_addNewButtonCustomerActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+    private void refreshButtonCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonCustomerActionPerformed
         // TODO add your handling code here:
         customers = SerializationManager.loadCustomers();
+        refreshCustomerTable();
+    }//GEN-LAST:event_refreshButtonCustomerActionPerformed
+
+    private void editSelectedButtonCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSelectedButtonCustomerActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = customerTable.getSelectedRow();
+        String name = customerTable.getModel().getValueAt(selectedRow, 0).toString();
+        String address = customerTable.getModel().getValueAt(selectedRow, 1).toString();
+        String city = customerTable.getModel().getValueAt(selectedRow, 2).toString();
+        String postcode = customerTable.getModel().getValueAt(selectedRow, 3).toString();
+        SerializationManager.deleteCustomer(new Customer(name,address,city,postcode));
         
-        String [] customerArray = new String[customers.size()];
-        for (int i = 0; i < customers.size(); i++){
-            customerArray[i] = customers.get(i).getName();
-        }
+        CustomerInfoScreen newScreen = new CustomerInfoScreen();
+        newScreen.initializeEditMode(name, address, city, postcode);
+        newScreen.setVisible(true);
+    }//GEN-LAST:event_editSelectedButtonCustomerActionPerformed
+
+    private void editSelectedButtonItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSelectedButtonItemActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = itemTable.getSelectedRow();
+        String name = itemTable.getModel().getValueAt(selectedRow, 0).toString();
+        String description = itemTable.getModel().getValueAt(selectedRow, 1).toString();
+        String priceAsString = itemTable.getModel().getValueAt(selectedRow, 2).toString();
+        double price = Double.parseDouble(priceAsString);
+        SerializationManager.deleteItem(new Item(name,description,price));
         
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(customerArray));
-    }//GEN-LAST:event_refreshButtonActionPerformed
+        ItemInfoScreen newScreen = new ItemInfoScreen();
+        newScreen.initializeEditMode(name,description,priceAsString);
+        newScreen.setVisible(true);
+    }//GEN-LAST:event_editSelectedButtonItemActionPerformed
+
+    private void refreshButtonItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonItemActionPerformed
+        // TODO add your handling code here:
+         items = SerializationManager.loadItems();
+         refreshItemTable();
+    }//GEN-LAST:event_refreshButtonItemActionPerformed
+
+    private void addNewButtonItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonItemActionPerformed
+        // TODO add your handling code here:
+          new ItemInfoScreen().setVisible(true);
+    }//GEN-LAST:event_addNewButtonItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,18 +315,57 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void refreshCustomerTable()
+    {
+        ArrayList<String> columns = new ArrayList<String>();
+        ArrayList<String[]> values = new ArrayList<String[]>();
+        
+        columns.add("Name");
+        columns.add("Address");
+        columns.add("City");
+        columns.add("Postcode");
+        
+        customers.forEach(i -> {
+            values.add(new String[] {i.getName(),i.getAddress(),i.getCity(),i.getPostcode()});
+        });
+        
+        customerTable.setModel(new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray()));
+ 
+    }
+    
+    private void refreshItemTable()
+    {
+        ArrayList<String> columns = new ArrayList<String>();
+        ArrayList<String[]> values = new ArrayList<String[]>();
+        
+        columns.add("Name");
+        columns.add("Description");
+        columns.add("Price");
+        
+        items.forEach(i -> {
+            values.add(new String[] {i.getName(),i.getDescription(),String.valueOf(i.getPrice())});
+        });
+        
+        itemTable.setModel(new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray()));
+ 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addNewButton;
+    private javax.swing.JButton addNewButtonCustomer;
+    private javax.swing.JButton addNewButtonItem;
     private javax.swing.JButton customerButton;
+    private javax.swing.JPanel customerPanel;
+    private javax.swing.JTable customerTable;
+    private javax.swing.JButton editSelectedButtonCustomer;
+    private javax.swing.JButton editSelectedButtonItem;
     private javax.swing.JButton itemButton;
     private javax.swing.JPanel itemPanel;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTable itemTable;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JButton refreshButton;
-    private javax.swing.JPanel userPanel;
-    private javax.swing.JTable userTable;
+    private javax.swing.JButton refreshButtonCustomer;
+    private javax.swing.JButton refreshButtonItem;
     // End of variables declaration//GEN-END:variables
 }
