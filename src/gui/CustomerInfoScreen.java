@@ -48,7 +48,7 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(java.awt.Color.green);
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -56,50 +56,60 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
         jPanel1.add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, 50));
 
         addressTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 340, 50));
+        jPanel1.add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 340, 50));
 
         cityTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(cityTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 340, 50));
+        cityTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cityTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cityTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 340, 50));
 
         postcodeTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(postcodeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 340, 50));
+        postcodeTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                postcodeTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(postcodeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, 340, 50));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setText("Postcode");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 110, 60));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 110, 60));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setText("Full name");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 110, 60));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 110, 60));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setForeground(java.awt.Color.white);
         jLabel3.setText("Address");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 110, 60));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 110, 60));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setForeground(java.awt.Color.white);
         jLabel4.setText("City");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 110, 60));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 110, 60));
 
-        Submit.setBackground(new java.awt.Color(255, 255, 255));
+        Submit.setBackground(java.awt.Color.blue);
         Submit.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        Submit.setForeground(new java.awt.Color(0, 0, 0));
+        Submit.setForeground(java.awt.Color.white);
         Submit.setText("Submit");
         Submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 590, 130, 60));
+        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, 130, 60));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 700));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -115,13 +125,30 @@ public class CustomerInfoScreen extends javax.swing.JFrame {
             String address = addressTextField.getText();
             String city = cityTextField.getText();
             String postcode = postcodeTextField.getText();
-            
-            Customer customer = new Customer(name,address,city,postcode);
-            customers.add(customer);
-            SerializationManager.saveCustomers(customers);
-            this.dispose();
+            try{
+                int postcodeInt = Integer.parseInt(postcode);
+                if (postcodeInt < 10000 || postcodeInt > 99999)
+                    throw new NumberFormatException();
+                
+                Customer customer = new Customer(name,address,city,postcode);
+                customers.add(customer);
+                SerializationManager.saveCustomers(customers);
+                this.dispose();
+            }
+            catch(NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(null, "Postcode must be a 5 - digit number!");
+            }
         }
     }//GEN-LAST:event_SubmitActionPerformed
+
+    private void cityTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cityTextFieldActionPerformed
+
+    private void postcodeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postcodeTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_postcodeTextFieldActionPerformed
 
     /**
      * @param args the command line arguments

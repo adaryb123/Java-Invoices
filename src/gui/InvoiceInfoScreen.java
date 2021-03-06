@@ -5,6 +5,7 @@
  */
 package gui;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.awt.Font;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,82 +73,91 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         itemAmmountSpinner = new javax.swing.JSpinner();
         jScrollPane4 = new javax.swing.JScrollPane();
         itemAndCountTable = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        totalPriceTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setToolTipText("");
+
+        jPanel1.setBackground(java.awt.Color.green);
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Ammount");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 150, 180, 60));
+        jLabel1.setForeground(java.awt.Color.white);
+        jLabel1.setText("Total price");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, 180, 60));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setText("Select customer");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 230, 60));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 230, 60));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setForeground(java.awt.Color.white);
         jLabel3.setText("Ordered items");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 230, 60));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 230, 60));
 
-        Submit.setBackground(new java.awt.Color(255, 255, 255));
+        Submit.setBackground(java.awt.Color.blue);
         Submit.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        Submit.setForeground(new java.awt.Color(0, 0, 0));
+        Submit.setForeground(java.awt.Color.white);
         Submit.setText("Submit");
         Submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 720, 130, 60));
+        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 580, 230, 60));
 
         itemComboBox.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(itemComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 550, 60));
+        jPanel1.add(itemComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 540, 60));
 
         customerComboBox.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         customerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(customerComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 550, 60));
+        jPanel1.add(customerComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 540, 60));
 
+        addItemButton.setBackground(java.awt.Color.blue);
         addItemButton.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        addItemButton.setForeground(java.awt.Color.white);
         addItemButton.setText("Add");
         addItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addItemButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(addItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 290, 220, 60));
+        jPanel1.add(addItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 300, 220, 60));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setForeground(java.awt.Color.white);
         jLabel4.setText("Select item");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 180, 60));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 180, 60));
 
+        removeItemButton.setBackground(java.awt.Color.blue);
         removeItemButton.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        removeItemButton.setForeground(java.awt.Color.white);
         removeItemButton.setText("Remove selected");
         removeItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeItemButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(removeItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 370, 220, 60));
+        jPanel1.add(removeItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 380, 220, 60));
 
         itemAmmountSpinner.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         itemAmmountSpinner.setValue(1);
-        jPanel1.add(itemAmmountSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, 220, 60));
+        jPanel1.add(itemAmmountSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 220, 60));
 
         itemAndCountTable.setAutoCreateRowSorter(true);
-        itemAndCountTable.setBackground(new java.awt.Color(255, 255, 255));
+        itemAndCountTable.setBackground(java.awt.Color.white);
         itemAndCountTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        itemAndCountTable.setForeground(new java.awt.Color(0, 0, 0));
+        itemAndCountTable.setForeground(java.awt.Color.black);
         itemAndCountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
             },
@@ -162,7 +172,22 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
         tableHeader.setFont(headerFont);
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 540, 340));
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 540, 340));
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel5.setForeground(java.awt.Color.white);
+        jLabel5.setText("Ammount");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 130, 180, 60));
+
+        totalPriceTextField.setBackground(java.awt.Color.white);
+        totalPriceTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        totalPriceTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalPriceTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(totalPriceTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 500, 230, 60));
 
         jScrollPane3.setViewportView(jPanel1);
 
@@ -177,8 +202,8 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane3)
-                .addGap(19, 19, 19))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,7 +227,7 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
 
     private void removeItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemButtonActionPerformed
         // TODO add your handling code here:
-         int selectedRow = itemAndCountTable.getSelectedRow();
+        int selectedRow = itemAndCountTable.getSelectedRow();
         int ammount = Integer.valueOf(itemAndCountTable.getModel().getValueAt(selectedRow, 0).toString());
         String name = itemAndCountTable.getModel().getValueAt(selectedRow, 1).toString();
         DefaultTableModel model = (DefaultTableModel) itemAndCountTable.getModel();
@@ -214,19 +239,32 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
                 break;
             }
         }
+        updateTotalPriceTextField();
     }//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         // TODO add your handling code here:
         int itemIndex = itemComboBox.getSelectedIndex();
         Item item = items.get(itemIndex);
-        int ammount = (Integer) itemAmmountSpinner.getValue();
-        
-        ItemAndCount itemAndCount = new ItemAndCount(item,ammount);
-        DefaultTableModel model = (DefaultTableModel) itemAndCountTable.getModel();
-        model.addRow(new Object[]{String.valueOf(itemAndCount.getCount()),itemAndCount.getItem().getName()});
-        itemsAndCounts.add(itemAndCount);
+        try{
+            int ammount = Integer.parseInt(itemAmmountSpinner.getValue().toString());
+            if (ammount <= 0)
+                throw new NumberFormatException();
+            
+            ItemAndCount itemAndCount = new ItemAndCount(item,ammount);
+            DefaultTableModel model = (DefaultTableModel) itemAndCountTable.getModel();
+            model.addRow(new Object[]{String.valueOf(itemAndCount.getCount()),itemAndCount.getItem().getName()});
+            itemsAndCounts.add(itemAndCount);
+            updateTotalPriceTextField();
+        }
+        catch(NumberFormatException e){
+             JOptionPane.showMessageDialog(null, "Invalid ammount!");
+        }
     }//GEN-LAST:event_addItemButtonActionPerformed
+
+    private void totalPriceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPriceTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_totalPriceTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +300,15 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void updateTotalPriceTextField(){
+        double totalPrice = 0;
+        for (int i = 0; i < itemsAndCounts.size(); i++)
+        {
+            totalPrice += itemsAndCounts.get(i).getItem().getPrice() * itemsAndCounts.get(i).getCount();
+        }
+        totalPriceTextField.setText(String.valueOf(totalPrice));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Submit;
@@ -274,9 +321,11 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton removeItemButton;
+    private javax.swing.JTextField totalPriceTextField;
     // End of variables declaration//GEN-END:variables
 }

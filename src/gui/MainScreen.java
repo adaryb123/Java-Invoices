@@ -75,20 +75,20 @@ public class MainScreen extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        itemButton.setBackground(new java.awt.Color(255, 255, 255));
+        itemButton.setBackground(new java.awt.Color(51, 51, 255));
         itemButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        itemButton.setForeground(new java.awt.Color(0, 0, 0));
+        itemButton.setForeground(new java.awt.Color(255, 255, 255));
         itemButton.setText("Items");
         itemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(itemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 120, 60));
+        getContentPane().add(itemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 120, 60));
 
-        customerButton.setBackground(new java.awt.Color(255, 255, 255));
+        customerButton.setBackground(new java.awt.Color(51, 51, 255));
         customerButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        customerButton.setForeground(new java.awt.Color(0, 0, 0));
+        customerButton.setForeground(new java.awt.Color(255, 255, 255));
         customerButton.setText("Customers");
         customerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,22 +97,22 @@ public class MainScreen extends javax.swing.JFrame {
         });
         getContentPane().add(customerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 120, 60));
 
-        invoiceButton.setBackground(new java.awt.Color(255, 255, 255));
+        invoiceButton.setBackground(new java.awt.Color(51, 51, 255));
         invoiceButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        invoiceButton.setForeground(new java.awt.Color(0, 0, 0));
+        invoiceButton.setForeground(new java.awt.Color(255, 255, 255));
         invoiceButton.setText("Invoices");
         invoiceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 invoiceButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(invoiceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 120, 60));
+        getContentPane().add(invoiceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 120, 60));
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setForeground(new java.awt.Color(0, 0, 0));
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        invoicesPanel.setBackground(new java.awt.Color(255, 255, 255));
+        invoicesPanel.setBackground(java.awt.Color.green);
         invoicesPanel.setForeground(new java.awt.Color(0, 0, 0));
         invoicesPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -131,6 +131,7 @@ public class MainScreen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        invoiceTable.setGridColor(new java.awt.Color(0, 0, 0));
         invoiceTable.setRowHeight(35);
         invoiceTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(invoiceTable);
@@ -138,33 +139,33 @@ public class MainScreen extends javax.swing.JFrame {
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
         tableHeader3.setFont(headerFont);
 
-        invoicesPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 380));
+        invoicesPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 800, 360));
 
-        addNewButtonInvoice.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonInvoice.setBackground(java.awt.Color.blue);
         addNewButtonInvoice.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        addNewButtonInvoice.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonInvoice.setForeground(new java.awt.Color(255, 255, 255));
         addNewButtonInvoice.setText("Add New");
         addNewButtonInvoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewButtonInvoiceActionPerformed(evt);
             }
         });
-        invoicesPanel.add(addNewButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+        invoicesPanel.add(addNewButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 150, 60));
 
-        refreshButtonInvoice.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonInvoice.setBackground(java.awt.Color.blue);
         refreshButtonInvoice.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        refreshButtonInvoice.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonInvoice.setForeground(new java.awt.Color(255, 255, 255));
         refreshButtonInvoice.setText("Refresh");
         refreshButtonInvoice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshButtonInvoiceActionPerformed(evt);
             }
         });
-        invoicesPanel.add(refreshButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 130, 60));
+        invoicesPanel.add(refreshButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 150, 60));
 
         mainPanel.add(invoicesPanel, "invoicePanel");
 
-        customerPanel.setBackground(new java.awt.Color(255, 255, 255));
+        customerPanel.setBackground(java.awt.Color.green);
         customerPanel.setForeground(new java.awt.Color(0, 0, 0));
         customerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -190,79 +191,79 @@ public class MainScreen extends javax.swing.JFrame {
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
         tableHeader.setFont(headerFont);
 
-        customerPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 370));
+        customerPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 790, 360));
 
-        addNewButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonCustomer.setBackground(java.awt.Color.blue);
         addNewButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        addNewButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonCustomer.setForeground(java.awt.Color.white);
         addNewButtonCustomer.setText("Add New");
         addNewButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewButtonCustomerActionPerformed(evt);
             }
         });
-        customerPanel.add(addNewButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+        customerPanel.add(addNewButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 150, 60));
 
-        refreshButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonCustomer.setBackground(java.awt.Color.blue);
         refreshButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        refreshButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonCustomer.setForeground(java.awt.Color.white);
         refreshButtonCustomer.setText("Refresh");
         refreshButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshButtonCustomerActionPerformed(evt);
             }
         });
-        customerPanel.add(refreshButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 130, 60));
+        customerPanel.add(refreshButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 150, 60));
 
-        editSelectedButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        editSelectedButtonCustomer.setBackground(java.awt.Color.blue);
         editSelectedButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        editSelectedButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        editSelectedButtonCustomer.setForeground(java.awt.Color.white);
         editSelectedButtonCustomer.setText("Edit Selected");
         editSelectedButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editSelectedButtonCustomerActionPerformed(evt);
             }
         });
-        customerPanel.add(editSelectedButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
+        customerPanel.add(editSelectedButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 150, 60));
 
         mainPanel.add(customerPanel, "customerPanel");
 
-        itemPanel.setBackground(new java.awt.Color(255, 255, 255));
+        itemPanel.setBackground(java.awt.Color.green);
         itemPanel.setForeground(new java.awt.Color(0, 0, 0));
         itemPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        editSelectedButtonItem.setBackground(new java.awt.Color(255, 255, 255));
+        editSelectedButtonItem.setBackground(java.awt.Color.blue);
         editSelectedButtonItem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        editSelectedButtonItem.setForeground(new java.awt.Color(0, 0, 0));
+        editSelectedButtonItem.setForeground(java.awt.Color.white);
         editSelectedButtonItem.setText("Edit Selected");
         editSelectedButtonItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editSelectedButtonItemActionPerformed(evt);
             }
         });
-        itemPanel.add(editSelectedButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
+        itemPanel.add(editSelectedButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 150, 60));
 
-        refreshButtonItem.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonItem.setBackground(java.awt.Color.blue);
         refreshButtonItem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        refreshButtonItem.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonItem.setForeground(java.awt.Color.white);
         refreshButtonItem.setText("Refresh");
         refreshButtonItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshButtonItemActionPerformed(evt);
             }
         });
-        itemPanel.add(refreshButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 430, 130, 60));
+        itemPanel.add(refreshButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 150, 60));
 
-        addNewButtonItem.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonItem.setBackground(java.awt.Color.blue);
         addNewButtonItem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        addNewButtonItem.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonItem.setForeground(java.awt.Color.white);
         addNewButtonItem.setText("Add New");
         addNewButtonItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewButtonItemActionPerformed(evt);
             }
         });
-        itemPanel.add(addNewButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+        itemPanel.add(addNewButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 150, 60));
 
         itemTable.setAutoCreateRowSorter(true);
         itemTable.setBackground(new java.awt.Color(255, 255, 255));
@@ -286,7 +287,7 @@ public class MainScreen extends javax.swing.JFrame {
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
         itemTableHeader.setFont(headerFont);
 
-        itemPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 370));
+        itemPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 360));
 
         mainPanel.add(itemPanel, "itemPanel");
 

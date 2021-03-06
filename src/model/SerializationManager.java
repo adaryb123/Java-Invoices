@@ -32,7 +32,7 @@ public final class SerializationManager {
         
         try
         {
-            FileInputStream file = new FileInputStream("Customers.dat");
+            FileInputStream file = new FileInputStream("DataFiles/Customers.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -52,14 +52,14 @@ public final class SerializationManager {
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(null,e.getMessage());
+            //JOptionPane.showMessageDialog(null,e.getMessage());
         }
         return customers;
     }
     
     public static void saveCustomers(ArrayList<Customer> customers){
         try{
-            FileOutputStream file = new FileOutputStream("Customers.dat");
+            FileOutputStream file = new FileOutputStream("DataFiles/Customers.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
             for (int i = 0; i < customers.size(); i++){
@@ -67,6 +67,9 @@ public final class SerializationManager {
             }
             outputFile.close();
             //this.dispose();
+        }
+        catch (IOException e){
+            
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
@@ -94,7 +97,7 @@ public final class SerializationManager {
         
         try
         {
-            FileInputStream file = new FileInputStream("Items.dat");
+            FileInputStream file = new FileInputStream("DataFiles/Items.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -114,14 +117,14 @@ public final class SerializationManager {
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(null,e.getMessage());
+            //JOptionPane.showMessageDialog(null,e.getMessage());
         }
         return items;
     }
     
     public static void saveItems(ArrayList<Item> items){
         try{
-            FileOutputStream file = new FileOutputStream("Items.dat");
+            FileOutputStream file = new FileOutputStream("DataFiles/Items.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
             for (int i = 0; i < items.size(); i++){
@@ -129,6 +132,10 @@ public final class SerializationManager {
             }
             outputFile.close();
             //this.dispose();
+        }
+        catch(IOException e)
+        {
+            
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
@@ -155,7 +162,7 @@ public final class SerializationManager {
         
         try
         {
-            FileInputStream file = new FileInputStream("Invoices.dat");
+            FileInputStream file = new FileInputStream("DataFiles/Invoices.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -175,14 +182,14 @@ public final class SerializationManager {
         }
         catch (IOException e)
         {
-            JOptionPane.showMessageDialog(null,e.getMessage());
+           // JOptionPane.showMessageDialog(null,e.getMessage());
         }
         return invoices;
     }
     
     public static void saveInvoices(ArrayList<Invoice> invoices){
         try{
-            FileOutputStream file = new FileOutputStream("Invoices.dat");
+            FileOutputStream file = new FileOutputStream("DataFiles/Invoices.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
             for (int i = 0; i < invoices.size(); i++){
@@ -190,6 +197,10 @@ public final class SerializationManager {
             }
             outputFile.close();
             //this.dispose();
+        }
+        catch(IOException e)
+        {
+            
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());

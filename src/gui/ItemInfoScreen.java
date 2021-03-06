@@ -45,14 +45,16 @@ public class ItemInfoScreen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionTextArea = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(java.awt.Color.green);
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        nameTextField.setBackground(java.awt.Color.white);
         nameTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        nameTextField.setForeground(java.awt.Color.black);
         nameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTextFieldActionPerformed(evt);
@@ -60,40 +62,51 @@ public class ItemInfoScreen extends javax.swing.JFrame {
         });
         jPanel1.add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, 50));
 
+        priceTextField.setBackground(java.awt.Color.white);
         priceTextField.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jPanel1.add(priceTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 480, 340, 50));
+        priceTextField.setForeground(java.awt.Color.black);
+        priceTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(priceTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 340, 50));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(java.awt.Color.white);
         jLabel1.setText("Price");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, 110, 60));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 110, 60));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setText("Name");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 110, 60));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 110, 60));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setForeground(java.awt.Color.white);
         jLabel3.setText("Description");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 140, 60));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 140, 60));
 
-        Submit.setBackground(new java.awt.Color(255, 255, 255));
+        Submit.setBackground(java.awt.Color.blue);
         Submit.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        Submit.setForeground(new java.awt.Color(0, 0, 0));
+        Submit.setForeground(java.awt.Color.white);
         Submit.setText("Submit");
         Submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 560, 130, 60));
+        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, 130, 60));
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        descriptionTextArea.setBackground(java.awt.Color.white);
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        descriptionTextArea.setForeground(java.awt.Color.black);
         descriptionTextArea.setRows(5);
         jScrollPane1.setViewportView(descriptionTextArea);
 
@@ -111,21 +124,33 @@ public class ItemInfoScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You must enter all fields!");
         }
         else{
-            String name = nameTextField.getText();
-            String description = descriptionTextArea.getText();
-            String priceAsString = priceTextField.getText();
-            double price = Double.parseDouble(priceAsString);
-            
-            Item item = new Item(name,description,price);
-            items.add(item);
-            SerializationManager.saveItems(items);
-            this.dispose();
+            try{
+                String name = nameTextField.getText();
+                String description = descriptionTextArea.getText();
+                String priceAsString = priceTextField.getText();
+                double price = Double.parseDouble(priceAsString);
+                if (price <= 0)
+                    throw new NumberFormatException();
+
+                Item item = new Item(name,description,price);
+                items.add(item);
+                SerializationManager.saveItems(items);
+                this.dispose();
+            }
+            catch(NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(null, "Price must be a real number!");
+            }
         }
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTextFieldActionPerformed
+
+    private void priceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_priceTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
