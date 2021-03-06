@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import model.SerializationManager;
 import model.Customer;
+import model.Invoice;
 import model.Item;
 
 /**
@@ -23,6 +24,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     ArrayList<Customer> customers;
     ArrayList<Item> items;
+    ArrayList<Invoice> invoices;
     
     /**
      * Creates new form mainScreen
@@ -31,9 +33,11 @@ public class MainScreen extends javax.swing.JFrame {
         initComponents();
         customers = SerializationManager.loadCustomers();
         items = SerializationManager.loadItems();
+        invoices = SerializationManager.loadInvoices();
         
         refreshCustomerTable();
         refreshItemTable();
+        refreshInvoiceTable();
     }
     
     /**
@@ -47,19 +51,26 @@ public class MainScreen extends javax.swing.JFrame {
 
         itemButton = new javax.swing.JButton();
         customerButton = new javax.swing.JButton();
+        invoiceButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
-        itemPanel = new javax.swing.JPanel();
-        editSelectedButtonItem = new javax.swing.JButton();
-        refreshButtonItem = new javax.swing.JButton();
-        addNewButtonItem = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        itemTable = new javax.swing.JTable();
+        invoicesPanel = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        invoiceTable = new javax.swing.JTable();
+        addNewButtonInvoice = new javax.swing.JButton();
+        refreshButtonInvoice = new javax.swing.JButton();
+        editSelectedButtonInvoice = new javax.swing.JButton();
         customerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         customerTable = new javax.swing.JTable();
         addNewButtonCustomer = new javax.swing.JButton();
         refreshButtonCustomer = new javax.swing.JButton();
         editSelectedButtonCustomer = new javax.swing.JButton();
+        itemPanel = new javax.swing.JPanel();
+        editSelectedButtonItem = new javax.swing.JButton();
+        refreshButtonItem = new javax.swing.JButton();
+        addNewButtonItem = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        itemTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -68,18 +79,18 @@ public class MainScreen extends javax.swing.JFrame {
         itemButton.setBackground(new java.awt.Color(255, 255, 255));
         itemButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         itemButton.setForeground(new java.awt.Color(0, 0, 0));
-        itemButton.setText("Item");
+        itemButton.setText("Items");
         itemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(itemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 120, 60));
+        getContentPane().add(itemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 120, 60));
 
         customerButton.setBackground(new java.awt.Color(255, 255, 255));
         customerButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         customerButton.setForeground(new java.awt.Color(0, 0, 0));
-        customerButton.setText("Customer");
+        customerButton.setText("Customers");
         customerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerButtonActionPerformed(evt);
@@ -87,9 +98,142 @@ public class MainScreen extends javax.swing.JFrame {
         });
         getContentPane().add(customerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 120, 60));
 
+        invoiceButton.setBackground(new java.awt.Color(255, 255, 255));
+        invoiceButton.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        invoiceButton.setForeground(new java.awt.Color(0, 0, 0));
+        invoiceButton.setText("Invoices");
+        invoiceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invoiceButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(invoiceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 120, 60));
+
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setForeground(new java.awt.Color(0, 0, 0));
         mainPanel.setLayout(new java.awt.CardLayout());
+
+        invoicesPanel.setBackground(new java.awt.Color(255, 255, 255));
+        invoicesPanel.setForeground(new java.awt.Color(0, 0, 0));
+        invoicesPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        invoiceTable.setBackground(new java.awt.Color(255, 255, 255));
+        invoiceTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        invoiceTable.setForeground(new java.awt.Color(0, 0, 0));
+        invoiceTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        invoiceTable.setRowHeight(35);
+        jScrollPane3.setViewportView(invoiceTable);
+        JTableHeader tableHeader3 = invoiceTable.getTableHeader();
+        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
+        tableHeader3.setFont(headerFont);
+
+        invoicesPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 380));
+
+        addNewButtonInvoice.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonInvoice.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        addNewButtonInvoice.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonInvoice.setText("Add New");
+        addNewButtonInvoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewButtonInvoiceActionPerformed(evt);
+            }
+        });
+        invoicesPanel.add(addNewButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+
+        refreshButtonInvoice.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonInvoice.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        refreshButtonInvoice.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonInvoice.setText("Refresh");
+        refreshButtonInvoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonInvoiceActionPerformed(evt);
+            }
+        });
+        invoicesPanel.add(refreshButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 430, 130, 60));
+
+        editSelectedButtonInvoice.setBackground(new java.awt.Color(255, 255, 255));
+        editSelectedButtonInvoice.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        editSelectedButtonInvoice.setForeground(new java.awt.Color(0, 0, 0));
+        editSelectedButtonInvoice.setText("Edit Selected");
+        editSelectedButtonInvoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSelectedButtonInvoiceActionPerformed(evt);
+            }
+        });
+        invoicesPanel.add(editSelectedButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
+
+        mainPanel.add(invoicesPanel, "invoicePanel");
+
+        customerPanel.setBackground(new java.awt.Color(255, 255, 255));
+        customerPanel.setForeground(new java.awt.Color(0, 0, 0));
+        customerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        customerTable.setBackground(new java.awt.Color(255, 255, 255));
+        customerTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        customerTable.setForeground(new java.awt.Color(0, 0, 0));
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        customerTable.setRowHeight(35);
+        jScrollPane1.setViewportView(customerTable);
+        JTableHeader tableHeader = customerTable.getTableHeader();
+        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
+        tableHeader.setFont(headerFont);
+
+        customerPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 370));
+
+        addNewButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        addNewButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        addNewButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        addNewButtonCustomer.setText("Add New");
+        addNewButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewButtonCustomerActionPerformed(evt);
+            }
+        });
+        customerPanel.add(addNewButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
+
+        refreshButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        refreshButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        refreshButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        refreshButtonCustomer.setText("Refresh");
+        refreshButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonCustomerActionPerformed(evt);
+            }
+        });
+        customerPanel.add(refreshButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 130, 60));
+
+        editSelectedButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        editSelectedButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        editSelectedButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        editSelectedButtonCustomer.setText("Edit Selected");
+        editSelectedButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSelectedButtonCustomerActionPerformed(evt);
+            }
+        });
+        customerPanel.add(editSelectedButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
+
+        mainPanel.add(customerPanel, "customerPanel");
 
         itemPanel.setBackground(new java.awt.Color(255, 255, 255));
         itemPanel.setForeground(new java.awt.Color(0, 0, 0));
@@ -152,67 +296,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         mainPanel.add(itemPanel, "itemPanel");
 
-        customerPanel.setBackground(new java.awt.Color(255, 255, 255));
-        customerPanel.setForeground(new java.awt.Color(0, 0, 0));
-        customerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        customerTable.setBackground(new java.awt.Color(255, 255, 255));
-        customerTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        customerTable.setForeground(new java.awt.Color(0, 0, 0));
-        customerTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        customerTable.setRowHeight(35);
-        jScrollPane1.setViewportView(customerTable);
-        JTableHeader tableHeader = customerTable.getTableHeader();
-        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
-        tableHeader.setFont(headerFont);
-
-        customerPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 370));
-
-        addNewButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
-        addNewButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        addNewButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
-        addNewButtonCustomer.setText("Add New");
-        addNewButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewButtonCustomerActionPerformed(evt);
-            }
-        });
-        customerPanel.add(addNewButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
-
-        refreshButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
-        refreshButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        refreshButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
-        refreshButtonCustomer.setText("Refresh");
-        refreshButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshButtonCustomerActionPerformed(evt);
-            }
-        });
-        customerPanel.add(refreshButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, 130, 60));
-
-        editSelectedButtonCustomer.setBackground(new java.awt.Color(255, 255, 255));
-        editSelectedButtonCustomer.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        editSelectedButtonCustomer.setForeground(new java.awt.Color(0, 0, 0));
-        editSelectedButtonCustomer.setText("Edit Selected");
-        editSelectedButtonCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editSelectedButtonCustomerActionPerformed(evt);
-            }
-        });
-        customerPanel.add(editSelectedButtonCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
-
-        mainPanel.add(customerPanel, "userPanel");
-
         getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 840, 630));
 
         pack();
@@ -227,7 +310,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
         // TODO add your handling code here:                                         
         CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "userPanel"); 
+        card.show(mainPanel, "customerPanel"); 
     }//GEN-LAST:event_customerButtonActionPerformed
 
     private void addNewButtonCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonCustomerActionPerformed
@@ -279,6 +362,27 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
           new ItemInfoScreen().setVisible(true);
     }//GEN-LAST:event_addNewButtonItemActionPerformed
+
+    private void invoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceButtonActionPerformed
+        // TODO add your handling code here:
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, "invoicePanel");
+    }//GEN-LAST:event_invoiceButtonActionPerformed
+
+    private void addNewButtonInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonInvoiceActionPerformed
+        // TODO add your handling code here:
+        new InvoiceInfoScreen().setVisible(true);
+    }//GEN-LAST:event_addNewButtonInvoiceActionPerformed
+
+    private void refreshButtonInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonInvoiceActionPerformed
+        // TODO add your handling code here:
+         invoices = SerializationManager.loadInvoices();
+         refreshInvoiceTable();
+    }//GEN-LAST:event_refreshButtonInvoiceActionPerformed
+
+    private void editSelectedButtonInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSelectedButtonInvoiceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editSelectedButtonInvoiceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,22 +454,44 @@ public class MainScreen extends javax.swing.JFrame {
         itemTable.setModel(new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray()));
  
     }
-
+private void refreshInvoiceTable()
+    {
+        ArrayList<String> columns = new ArrayList<String>();
+        ArrayList<String[]> values = new ArrayList<String[]>();
+        
+        columns.add("Customer");
+        columns.add("Date");
+        columns.add("Total Price");
+        
+        invoices.forEach(i -> {
+            values.add(new String[] {i.getCustomer().getName(),i.getDate(),String.valueOf(i.getTotalPrice())});
+        });
+        
+        invoiceTable.setModel(new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray()));
+ 
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewButtonCustomer;
+    private javax.swing.JButton addNewButtonInvoice;
     private javax.swing.JButton addNewButtonItem;
     private javax.swing.JButton customerButton;
     private javax.swing.JPanel customerPanel;
     private javax.swing.JTable customerTable;
     private javax.swing.JButton editSelectedButtonCustomer;
+    private javax.swing.JButton editSelectedButtonInvoice;
     private javax.swing.JButton editSelectedButtonItem;
+    private javax.swing.JButton invoiceButton;
+    private javax.swing.JTable invoiceTable;
+    private javax.swing.JPanel invoicesPanel;
     private javax.swing.JButton itemButton;
     private javax.swing.JPanel itemPanel;
     private javax.swing.JTable itemTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton refreshButtonCustomer;
+    private javax.swing.JButton refreshButtonInvoice;
     private javax.swing.JButton refreshButtonItem;
     // End of variables declaration//GEN-END:variables
 }

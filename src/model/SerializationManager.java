@@ -147,4 +147,65 @@ public final class SerializationManager {
         }
         saveItems(items);
     }
+    
+    //________________________________________________________________________________________________________
+    public static ArrayList<Invoice> loadInvoices()
+    {
+        ArrayList<Invoice> invoices = new ArrayList();
+        
+        try
+        {
+            FileInputStream file = new FileInputStream("Invoices.dat");
+            ObjectInputStream inputFile = new ObjectInputStream(file);
+            
+            boolean eof = false;
+            while (!eof)
+            {
+                try
+                {
+                    invoices.add((Invoice)inputFile.readObject());
+                }
+                catch (EOFException e){
+                     eof = true;
+                }
+                catch(Exception e){
+                     JOptionPane.showMessageDialog(null,e.getMessage());
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        return invoices;
+    }
+    
+    public static void saveInvoices(ArrayList<Invoice> invoices){
+        try{
+            FileOutputStream file = new FileOutputStream("Invoices.dat");
+            ObjectOutputStream outputFile = new ObjectOutputStream(file);
+            
+            for (int i = 0; i < invoices.size(); i++){
+                outputFile.writeObject(invoices.get(i));
+            }
+            outputFile.close();
+            //this.dispose();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    }
+    
+    public static void deleteInvoice(Invoice invoice){
+        ArrayList<Invoice> invoices = loadInvoices();
+        for (Invoice i : invoices){
+            if (i.getCustomer().getName().equals(invoice.getCustomer().getName()) && i.getDate().equals(invoice.getDate())
+                    && (int)i.getTotalPrice() == (int)invoice.getTotalPrice() && i.getItemAndCount().size() == invoice.getItemAndCount().size())
+            {
+                invoices.remove(i);
+                break;
+            }
+        }
+        saveInvoices(invoices);
+    }
 }
