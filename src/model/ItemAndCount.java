@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author uzivatel
  */
-public class ItemAndCount {
+public class ItemAndCount implements Serializable{
     
     private Item item;
     private int count;

@@ -195,17 +195,4 @@ public final class SerializationManager {
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
     }
-    
-    public static void deleteInvoice(Invoice invoice){
-        ArrayList<Invoice> invoices = loadInvoices();
-        for (Invoice i : invoices){
-            if (i.getCustomer().getName().equals(invoice.getCustomer().getName()) && i.getDate().equals(invoice.getDate())
-                    && (int)i.getTotalPrice() == (int)invoice.getTotalPrice() && i.getItemAndCount().size() == invoice.getItemAndCount().size())
-            {
-                invoices.remove(i);
-                break;
-            }
-        }
-        saveInvoices(invoices);
-    }
 }

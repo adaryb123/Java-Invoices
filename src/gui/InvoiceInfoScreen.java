@@ -5,10 +5,16 @@
  */
 package gui;
 
+import java.awt.Font;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import model.Customer;
 import model.Invoice;
 import model.Item;
+import model.ItemAndCount;
 import model.SerializationManager;
 
 /**
@@ -20,6 +26,7 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
     ArrayList<Customer> customers;
     ArrayList<Item> items;
     ArrayList<Invoice> invoices;
+    ArrayList<ItemAndCount> itemsAndCounts;
     /**
      * Creates new form InvoiceInfoScreen
      */
@@ -28,6 +35,7 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         customers = SerializationManager.loadCustomers();
         items = SerializationManager.loadItems();
         invoices = SerializationManager.loadInvoices();
+        itemsAndCounts = new ArrayList();
         
         String [] customersArray = new String[customers.size()];
         for (int i = 0; i < customers.size(); i++)
@@ -56,16 +64,16 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Submit = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        orderedItemsTextArea = new javax.swing.JTextArea();
         itemComboBox = new javax.swing.JComboBox<>();
         customerComboBox = new javax.swing.JComboBox<>();
         addItemButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         removeItemButton = new javax.swing.JButton();
         itemAmmountSpinner = new javax.swing.JSpinner();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        itemAndCountTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -99,13 +107,6 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 720, 130, 60));
-
-        orderedItemsTextArea.setColumns(20);
-        orderedItemsTextArea.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        orderedItemsTextArea.setRows(5);
-        jScrollPane1.setViewportView(orderedItemsTextArea);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 550, 350));
 
         itemComboBox.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         itemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -143,6 +144,26 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         itemAmmountSpinner.setValue(1);
         jPanel1.add(itemAmmountSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, 220, 60));
 
+        itemAndCountTable.setAutoCreateRowSorter(true);
+        itemAndCountTable.setBackground(new java.awt.Color(255, 255, 255));
+        itemAndCountTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        itemAndCountTable.setForeground(new java.awt.Color(0, 0, 0));
+        itemAndCountTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+            },
+            new String [] {
+                "Ammount", "Item name"
+            }
+        ));
+        itemAndCountTable.setRowHeight(35);
+        itemAndCountTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(itemAndCountTable);
+        JTableHeader tableHeader = itemAndCountTable.getTableHeader();
+        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
+        tableHeader.setFont(headerFont);
+
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 540, 340));
+
         jScrollPane3.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -165,29 +186,46 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        if (priceTextField.getText().isEmpty() || orderedItemsTextArea.getText().isEmpty() || priceTextField.getText().isEmpty())
+        if (itemsAndCounts.isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "You must enter all fields!");
+            JOptionPane.showMessageDialog(null, "You must select and item!");
         }
         else{
-            String name = priceTextField.getText();
-            String description = orderedItemsTextArea.getText();
-            String priceAsString = priceTextField.getText();
-            double price = Double.parseDouble(priceAsString);
-
-            Item item = new Item(name,description,price);
-            items.add(item);
-            SerializationManager.saveItems(items);
+            Customer customer = customers.get(customerComboBox.getSelectedIndex());
+            String date = java.time.LocalDateTime.now().toString();
+            Invoice invoice = new Invoice(customer,itemsAndCounts,date);
+            invoices.add(invoice);
+            SerializationManager.saveInvoices(invoices);
             this.dispose();
         }
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void removeItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemButtonActionPerformed
         // TODO add your handling code here:
+         int selectedRow = itemAndCountTable.getSelectedRow();
+        int ammount = Integer.valueOf(itemAndCountTable.getModel().getValueAt(selectedRow, 0).toString());
+        String name = itemAndCountTable.getModel().getValueAt(selectedRow, 1).toString();
+        DefaultTableModel model = (DefaultTableModel) itemAndCountTable.getModel();
+        model.removeRow(selectedRow);
+        
+        for (ItemAndCount i : itemsAndCounts){
+            if (i.getItem().getName().equals(name) && i.getCount() == ammount) {
+                itemsAndCounts.remove(i);
+                break;
+            }
+        }
     }//GEN-LAST:event_removeItemButtonActionPerformed
 
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemButtonActionPerformed
         // TODO add your handling code here:
+        int itemIndex = itemComboBox.getSelectedIndex();
+        Item item = items.get(itemIndex);
+        int ammount = (Integer) itemAmmountSpinner.getValue();
+        
+        ItemAndCount itemAndCount = new ItemAndCount(item,ammount);
+        DefaultTableModel model = (DefaultTableModel) itemAndCountTable.getModel();
+        model.addRow(new Object[]{String.valueOf(itemAndCount.getCount()),itemAndCount.getItem().getName()});
+        itemsAndCounts.add(itemAndCount);
     }//GEN-LAST:event_addItemButtonActionPerformed
 
     /**
@@ -230,15 +268,15 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
     private javax.swing.JButton addItemButton;
     private javax.swing.JComboBox<String> customerComboBox;
     private javax.swing.JSpinner itemAmmountSpinner;
+    private javax.swing.JTable itemAndCountTable;
     private javax.swing.JComboBox<String> itemComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea orderedItemsTextArea;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton removeItemButton;
     // End of variables declaration//GEN-END:variables
 }

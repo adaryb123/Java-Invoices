@@ -58,7 +58,6 @@ public class MainScreen extends javax.swing.JFrame {
         invoiceTable = new javax.swing.JTable();
         addNewButtonInvoice = new javax.swing.JButton();
         refreshButtonInvoice = new javax.swing.JButton();
-        editSelectedButtonInvoice = new javax.swing.JButton();
         customerPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         customerTable = new javax.swing.JTable();
@@ -117,6 +116,7 @@ public class MainScreen extends javax.swing.JFrame {
         invoicesPanel.setForeground(new java.awt.Color(0, 0, 0));
         invoicesPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        invoiceTable.setAutoCreateRowSorter(true);
         invoiceTable.setBackground(new java.awt.Color(255, 255, 255));
         invoiceTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         invoiceTable.setForeground(new java.awt.Color(0, 0, 0));
@@ -132,6 +132,7 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         invoiceTable.setRowHeight(35);
+        invoiceTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(invoiceTable);
         JTableHeader tableHeader3 = invoiceTable.getTableHeader();
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
@@ -159,18 +160,7 @@ public class MainScreen extends javax.swing.JFrame {
                 refreshButtonInvoiceActionPerformed(evt);
             }
         });
-        invoicesPanel.add(refreshButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 430, 130, 60));
-
-        editSelectedButtonInvoice.setBackground(new java.awt.Color(255, 255, 255));
-        editSelectedButtonInvoice.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        editSelectedButtonInvoice.setForeground(new java.awt.Color(0, 0, 0));
-        editSelectedButtonInvoice.setText("Edit Selected");
-        editSelectedButtonInvoice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editSelectedButtonInvoiceActionPerformed(evt);
-            }
-        });
-        invoicesPanel.add(editSelectedButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 180, 60));
+        invoicesPanel.add(refreshButtonInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 130, 60));
 
         mainPanel.add(invoicesPanel, "invoicePanel");
 
@@ -178,6 +168,7 @@ public class MainScreen extends javax.swing.JFrame {
         customerPanel.setForeground(new java.awt.Color(0, 0, 0));
         customerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        customerTable.setAutoCreateRowSorter(true);
         customerTable.setBackground(new java.awt.Color(255, 255, 255));
         customerTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         customerTable.setForeground(new java.awt.Color(0, 0, 0));
@@ -193,6 +184,7 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         customerTable.setRowHeight(35);
+        customerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(customerTable);
         JTableHeader tableHeader = customerTable.getTableHeader();
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
@@ -272,6 +264,7 @@ public class MainScreen extends javax.swing.JFrame {
         });
         itemPanel.add(addNewButtonItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 130, 60));
 
+        itemTable.setAutoCreateRowSorter(true);
         itemTable.setBackground(new java.awt.Color(255, 255, 255));
         itemTable.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         itemTable.setForeground(new java.awt.Color(0, 0, 0));
@@ -287,6 +280,7 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         itemTable.setRowHeight(35);
+        itemTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(itemTable);
         JTableHeader itemTableHeader = itemTable.getTableHeader();
         Font headerFont = new Font("Verdana", Font.PLAIN, 24);
@@ -379,10 +373,6 @@ public class MainScreen extends javax.swing.JFrame {
          invoices = SerializationManager.loadInvoices();
          refreshInvoiceTable();
     }//GEN-LAST:event_refreshButtonInvoiceActionPerformed
-
-    private void editSelectedButtonInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSelectedButtonInvoiceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editSelectedButtonInvoiceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -478,7 +468,6 @@ private void refreshInvoiceTable()
     private javax.swing.JPanel customerPanel;
     private javax.swing.JTable customerTable;
     private javax.swing.JButton editSelectedButtonCustomer;
-    private javax.swing.JButton editSelectedButtonInvoice;
     private javax.swing.JButton editSelectedButtonItem;
     private javax.swing.JButton invoiceButton;
     private javax.swing.JTable invoiceTable;
