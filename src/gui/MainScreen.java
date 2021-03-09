@@ -136,8 +136,8 @@ public class MainScreen extends javax.swing.JFrame {
         invoiceTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(invoiceTable);
         JTableHeader tableHeader3 = invoiceTable.getTableHeader();
-        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
-        tableHeader3.setFont(headerFont);
+        Font headerFont3 = new Font("Verdana", Font.PLAIN, 24);
+        tableHeader3.setFont(headerFont3);
 
         invoicesPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 800, 360));
 
@@ -284,8 +284,8 @@ public class MainScreen extends javax.swing.JFrame {
         itemTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(itemTable);
         JTableHeader itemTableHeader = itemTable.getTableHeader();
-        Font headerFont = new Font("Verdana", Font.PLAIN, 24);
-        itemTableHeader.setFont(headerFont);
+        Font headerFont2 = new Font("Verdana", Font.PLAIN, 24);
+        itemTableHeader.setFont(headerFont2);
 
         itemPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 810, 360));
 

@@ -171,7 +171,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="JTableHeader tableHeader3 = invoiceTable.getTableHeader();&#xa;Font headerFont = new Font(&quot;Verdana&quot;, Font.PLAIN, 24);&#xa;tableHeader3.setFont(headerFont);"/>
+                    <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="JTableHeader tableHeader3 = invoiceTable.getTableHeader();&#xa;Font headerFont3 = new Font(&quot;Verdana&quot;, Font.PLAIN, 24);&#xa;tableHeader3.setFont(headerFont3);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -475,7 +475,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="JTableHeader itemTableHeader = itemTable.getTableHeader();&#xa;Font headerFont = new Font(&quot;Verdana&quot;, Font.PLAIN, 24);&#xa;itemTableHeader.setFont(headerFont);"/>
+                    <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="JTableHeader itemTableHeader = itemTable.getTableHeader();&#xa;Font headerFont2 = new Font(&quot;Verdana&quot;, Font.PLAIN, 24);&#xa;itemTableHeader.setFont(headerFont2);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

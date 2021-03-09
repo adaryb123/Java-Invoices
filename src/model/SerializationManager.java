@@ -32,7 +32,7 @@ public final class SerializationManager {
         
         try
         {
-            FileInputStream file = new FileInputStream("DataFiles/Customers.dat");
+            FileInputStream file = new FileInputStream("Customers.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -59,7 +59,7 @@ public final class SerializationManager {
     
     public static void saveCustomers(ArrayList<Customer> customers){
         try{
-            FileOutputStream file = new FileOutputStream("DataFiles/Customers.dat");
+            FileOutputStream file = new FileOutputStream("Customers.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
             for (int i = 0; i < customers.size(); i++){
@@ -97,7 +97,7 @@ public final class SerializationManager {
         
         try
         {
-            FileInputStream file = new FileInputStream("DataFiles/Items.dat");
+            FileInputStream file = new FileInputStream("Items.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -124,7 +124,7 @@ public final class SerializationManager {
     
     public static void saveItems(ArrayList<Item> items){
         try{
-            FileOutputStream file = new FileOutputStream("DataFiles/Items.dat");
+            FileOutputStream file = new FileOutputStream("Items.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
             for (int i = 0; i < items.size(); i++){
@@ -162,7 +162,7 @@ public final class SerializationManager {
         
         try
         {
-            FileInputStream file = new FileInputStream("DataFiles/Invoices.dat");
+            FileInputStream file = new FileInputStream("Invoices.dat");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             
             boolean eof = false;
@@ -189,7 +189,7 @@ public final class SerializationManager {
     
     public static void saveInvoices(ArrayList<Invoice> invoices){
         try{
-            FileOutputStream file = new FileOutputStream("DataFiles/Invoices.dat");
+            FileOutputStream file = new FileOutputStream("Invoices.dat");
             ObjectOutputStream outputFile = new ObjectOutputStream(file);
             
             for (int i = 0; i < invoices.size(); i++){
