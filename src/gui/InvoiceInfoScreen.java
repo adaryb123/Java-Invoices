@@ -215,7 +215,7 @@ public class InvoiceInfoScreen extends javax.swing.JFrame {
         }
         else{
             Customer customer = customers.get(customerComboBox.getSelectedIndex());
-            String date = java.time.LocalDateTime.now().toString();
+            String date = java.time.LocalDateTime.now().toString().substring(0,10);
             Invoice invoice = new Invoice(customer,itemsAndCounts,date);
             invoices.add(invoice);
             SerializationManager.saveInvoices(invoices);
